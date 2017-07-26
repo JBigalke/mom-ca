@@ -145,3 +145,20 @@ declare function user:logout() as xs:boolean {
     return
     $logout
 };
+
+(: returns a user document by overloading a $uuid like: a1815dd9-3d8c-4dcb-9883-27bc73d5ddfc :) 
+(: author: JBigalke :)
+declare function user:document-by-uuid($uuid as xs:string*) as node()*{
+  let $userid := $uuid
+  let $atomid := concat('tag:www.monasterium.net,2011:/user/', $userid)
+  let $doc := root($user:db-base-collection//atom:id[.=$atomid]) 
+  return $doc
+};
+
+(: returns the user atom:id by overloading a email address :)
+(: author: JBigalke :)
+declare function user:atomid($email as xs:string*) as xs:string*{
+  let $doc :=user:document($email)
+  let $atomid := $doc//atom:id/text()
+  return $atomid
+};
