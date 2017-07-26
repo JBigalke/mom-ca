@@ -343,7 +343,10 @@ padding-left: 5px;
                </xrx:i18n>
            </a>
         </div> 
+        <!--  Gamification ist deaktiviert -->
+        <!--  
         <div id="gamification-points" style="display: none" class="collections-container">{myProfil:gamificationresults($user-gamification)}</div>
+        -->
         <!-- Not shown pop-up container for dialogs -->
         <div id="popup-container" style="display:none"></div>
         <!-- Create Friendship request --> 
