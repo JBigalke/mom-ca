@@ -38,240 +38,288 @@ along with VdU/VRET.  If not, see http://www.gnu.org/licenses.
      <xrx:jqueryflag>true</xrx:jqueryflag>
    </xrx:processor>
   </xrx:init>
-	<xrx:model>
-		<xf:model id="registration">
-			<xf:instance id="user-data">
-				<xrx:user xmlns:xrx="http://www.monasterium.net/NS/xrx">
-					<xrx:username />
-					<xrx:password />
-					<xrx:firstname />
-					<xrx:name />
-					<xrx:email />
-					<xrx:moderator />
-					<xrx:street />
-					<xrx:zip />
-					<xrx:town />
-					<xrx:phone />
-					<xrx:institution />
-					<xrx:info />
-					<xrx:storage>
-						<xrx:saved_list />
-						<xrx:bookmark_list />
-					</xrx:storage>
-				</xrx:user>
-			</xf:instance>
-			<xf:instance id="iresponse">
-				<xrx:response xmlns:xrx="http://www.monasterium.net/NS/xrx"/>
-			</xf:instance>
-			<xf:bind id="bfirstname" nodeset="/xrx:user/xrx:firstname"
-				constraint="string-length(.) &gt; 0" required="true()" />
-			<xf:bind id="bname" nodeset="/xrx:user/xrx:name" constraint="string-length(.) &gt; 0"
-				required="true()" />
-			<xf:bind id="bemail" type="email" constraint="string-length(.) &gt; 0"
-				nodeset="/xrx:user/xrx:email" required="true()" />
-			<xf:bind id="bpassword" nodeset="/xrx:user/xrx:password" constraint="string-length(.) &gt;= 6"
-				required="true()" />
-			<xf:bind id="brepeat-password" nodeset="/xrx:user/xrx:username"
-				constraint=". = ../xrx:password" required="true()" />
-			<xf:bind id="bmoderator" nodeset="/xrx:user/xrx:moderator"
-				constraint="string-length(.) &gt; 0" required="true()" />
-			<xf:submission id="screate-account"
-				action="{ $xrx:http-request-root }service/create-account" 
-				method="post"
-				replace="instance" 
-				instance="iresponse"/>
-		</xf:model>
-	</xrx:model>
+  <xrx:model>
+    <xf:model id="registration">
+      <xf:instance id="user-data">
+     <xrx:user xmlns:xrx="http://www.monasterium.net/NS/xrx">
+     <atom:id xmlns:atom="http://www.w3.org/2005/Atom">{metadata:atomid('user', util:uuid())}</atom:id>
+    <xrx:username/>
+    <xrx:password/>
+    <xrx:firstname/>
+    <xrx:name/>
+    <xrx:email/>
+    <xrx:moderator/>
+    <xrx:profil>
+        <xrx:private>
+            <xrx:visibility>private</xrx:visibility>
+            <xrx:contact>
+                <xrx:mail/>
+                <xrx:phone/>
+                <xrx:address>
+                    <xrx:country/>
+                    <xrx:city/>
+                    <xrx:postalcode/>
+                    <xrx:street/>
+                    <xrx:housenumber/>
+                </xrx:address>
+            </xrx:contact>
+        </xrx:private>
+        <xrx:institution>
+        <xrx:visibility>private</xrx:visibility>
+            <xrx:institute-name/>
+            <xrx:contact>
+                <xrx:mail/>
+                <xrx:phone/>
+                <xrx:address>
+                    <xrx:country/>
+                    <xrx:city/>
+                    <xrx:postalcode/>
+                    <xrx:street/>
+                    <xrx:housenumber/>
+                </xrx:address>
+            </xrx:contact>
+        </xrx:institution>
+        <xrx:twitter>
+          <xrx:twitteraccountname/>
+          <xrx:showpublishtwitterbutton>false</xrx:showpublishtwitterbutton>
+        </xrx:twitter>
+        <xrx:info/>
+        <xrx:chartercontact>false</xrx:chartercontact>
+    </xrx:profil>
+    <xrx:storage>
+        <xrx:saved_list/>
+        <xrx:bookmark_list/>
+    </xrx:storage>
+    <xrx:friends/>
+    <xrx:conversations/>
+    <xrx:gamification>
+        <xrx:active>true</xrx:active>
+        <xrx:attributePoints>0</xrx:attributePoints>
+        <xrx:ElementPoints>0</xrx:ElementPoints>
+        <xrx:PublishedCharters>0</xrx:PublishedCharters>
+        <xrx:OverallPoints>0</xrx:OverallPoints>
+        <xrx:rank>
+            <xrx:Rankname>New User</xrx:Rankname>
+            <xrx:achieved>{current-dateTime()}</xrx:achieved>
+        </xrx:rank>
+        <xrx:achievements/>
+    </xrx:gamification>
+</xrx:user>
+      </xf:instance>
+      <xf:instance id="iresponse">
+        <xrx:response xmlns:xrx="http://www.monasterium.net/NS/xrx"/>
+      </xf:instance>
+      <xf:bind id="bfirstname" nodeset="/xrx:user/xrx:firstname"
+        constraint="string-length(.) &gt; 0" required="true()" />
+      <xf:bind id="bname" nodeset="/xrx:user/xrx:name" constraint="string-length(.) &gt; 0"
+        required="true()" />
+      <xf:bind id="bemail" type="email" constraint="string-length(.) &gt; 0"
+        nodeset="/xrx:user/xrx:email" required="true()" />
+      <xf:bind id="bpassword" nodeset="/xrx:user/xrx:password" constraint="string-length(.) &gt;= 6"
+        required="true()" />
+      <xf:bind id="brepeat-password" nodeset="/xrx:user/xrx:username"
+        constraint=". = ../xrx:password" required="true()" />
+      <xf:bind id="bmoderator" nodeset="/xrx:user/xrx:moderator"
+        constraint="string-length(.) &gt; 0" required="true()" />
+      <xf:submission id="screate-account"
+        action="{ $xrx:http-request-root }service/create-account" 
+        method="post"
+        replace="instance" 
+        instance="iresponse"/>
+    </xf:model>
+  </xrx:model>
 	<xrx:jss>
 	      <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/jquery</xrx:resource>
         <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/external/mousewheel</xrx:resource>
         <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/core</xrx:resource>
         <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/widget</xrx:resource>
 	</xrx:jss>
-	<xrx:view>
-	  <div id="dregistration">
+  <xrx:view>
+    <div id="dregistration">
       <div class="h2">
         <xrx:i18n>
           <xrx:key>registration</xrx:key>
           <xrx:default>Registration</xrx:default>
         </xrx:i18n>
       </div>
-			<xf:group model="registration">
-				<div class="InlineRoundBordersAlert standard-form">
-					<div class="entry-info">
-					  <xrx:i18n>
-							<xrx:key>registration-info-message</xrx:key>
-							<xrx:default>Type in here some info about the registration with the translation tool.</xrx:default>
-					  </xrx:i18n>
-					</div>
-					<br/>    
-					<div id="dresponse-info-div">
-			      <div>
-				      <xf:output class="icon" ref="instance('iresponse')//xrx:icon" mediatype="image/*"/>
-				    </div>
-				    <div>
-				      <xf:output ref="instance('iresponse')//xrx:message"/>
-				    </div>
-				  </div>
-					<xf:switch>
-						<xf:case id="cuserinput">
-							<xf:group id="registration-div" appearance="bf:verticalTable"
-								class="InlineRoundBordersAlert">
-								<xf:input bind="bfirstname">
-									<xf:label>
-									  <xrx:i18n>
-											<xrx:key>firstname</xrx:key>
-											<xrx:default>Firstname</xrx:default>
-									  </xrx:i18n>
-										<span>*:&#160;</span>
-									</xf:label>
-									<xf:hint>
-									  <xrx:i18n>
-											<xrx:key>enter-your-firstname</xrx:key>
-											<xrx:default>Enter your Firstname</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:hint>
-									<xf:alert>
-									  <xrx:i18n>
-											<xrx:key>required-field</xrx:key>
-											<xrx:default>Required Field</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:alert>
-								</xf:input>
-								<xf:input bind="bname">
-									<xf:label>
-									  <xrx:i18n>
-											<xrx:key>lastname</xrx:key>
-											<xrx:default>Lastname</xrx:default>
-									  </xrx:i18n>
-										<span>*:&#160;</span>
-									</xf:label>
-									<xf:hint>
-									  <xrx:i18n>
-											<xrx:key>enter-your-lastname</xrx:key>
-											<xrx:default>Enter your Lastname</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:hint>
-									<xf:alert>
-									  <xrx:i18n>
-											<xrx:key>required-field</xrx:key>
-											<xrx:default>Required Field</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:alert>
-								</xf:input>
-								<xf:input bind="bemail">
-									<xf:label>
-									  <xrx:i18n>
-											<xrx:key>email</xrx:key>
-											<xrx:default>Email</xrx:default>
-										</xrx:i18n>
-										<span>*:&#160;</span>
-									</xf:label>
-									<xf:hint>
-									  <xrx:i18n>
-											<xrx:key>enter-your-email</xrx:key>
-											<xrx:default>Enter your Email Address</xrx:default>
-									  </xrx:i18n>
-										<span>.</span>
-									</xf:hint>
-									<xf:alert>
-									  <xrx:i18n>
-											<xrx:key>email-isnt-valid</xrx:key>
-											<xrx:default>Email Address isn't valid</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:alert>
-								</xf:input>
-								<xf:secret bind="bpassword">
-									<xf:label>
-									  <xrx:i18n>
-											<xrx:key>password</xrx:key>
-											<xrx:default>Password</xrx:default>
-										</xrx:i18n>
-										<span>*:&#160;</span>
-									</xf:label>
-									<xf:hint>
-									  <xrx:i18n>
-											<xrx:key>must-be-6-characters</xrx:key>
-											<xrx:default>Must be at least 6 characters</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:hint>
-									<xf:alert>
-									  <xrx:i18n>
-											<xrx:key>more-than-6-required</xrx:key>
-											<xrx:default>More than 6 characters required</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:alert>
-								</xf:secret>
-								<xf:secret bind="brepeat-password">
-									<xf:label>
-									  <xrx:i18n>
-											<xrx:key>repeat-password</xrx:key>
-											<xrx:default>Repeat Password</xrx:default>
-										</xrx:i18n>
-										<span>*:&#160;</span>
-									</xf:label>
-									<xf:hint>
-									  <xrx:i18n>
-											<xrx:key>repeat-password</xrx:key>
-											<xrx:default>Repeat Password</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:hint>
-									<xf:alert>
-									  <xrx:i18n>
-											<xrx:key>password-does-not-match</xrx:key>
-											<xrx:default>Password does not match</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:alert>
-								</xf:secret>
-								<xf:select1 bind="bmoderator" incremental="true">
-									<xf:label>
-									  <xrx:i18n>
-											<xrx:key>moderator</xrx:key>
-											<xrx:default>Moderator</xrx:default>
-										</xrx:i18n>
-										<span>*:&#160;</span>
-									</xf:label>
-									<xf:hint>
-									  <xrx:i18n>
-											<xrx:key>choose-a-moderator</xrx:key>
-											<xrx:default>Choose a Moderator</xrx:default>
-									  </xrx:i18n>
-										<span>.</span>
-									</xf:hint>
-									<xf:alert>
-									  <xrx:i18n>
-											<xrx:key>no-moderator-selected</xrx:key>
-											<xrx:default>No Moderator selected</xrx:default>
-										</xrx:i18n>
-										<span>.</span>
-									</xf:alert>
-									{
-									for $email in role:emails('moderator')
-									let $name-firstname := user:name-firstname($email)
-									order by $name-firstname
-									return
-									<xf:item>
-										<xf:label>{ $name-firstname }</xf:label>
-										<xf:value>{ $email }</xf:value>
-									</xf:item>
-									}
-									<xf:action ev:event="xforms-value-changed">
-										<xf:load show="embed" targetid="moderator-div">
-											<xf:resource
-												value="concat('{ $xrx:localhost-request-base-url }moderator-info?email=', /xrx:user/xrx:moderator)" />
-                    	<xf:extension includeCSS="false" includeScript="false"></xf:extension>
-										</xf:load>
-									</xf:action>
-								</xf:select1>
+      <xf:group model="registration">
+        <div class="InlineRoundBordersAlert standard-form">
+          <div class="entry-info">
+            <xrx:i18n>
+              <xrx:key>registration-info-message</xrx:key>
+              <xrx:default>Type in here some info about the registration with the translation tool.</xrx:default>
+            </xrx:i18n>
+          </div>
+          <br/>    
+          <div id="dresponse-info-div">
+            <div>
+              <xf:output class="icon" ref="instance('iresponse')//xrx:icon" mediatype="image/*"/>
+            </div>
+            <div>
+              <xf:output ref="instance('iresponse')//xrx:message"/>
+            </div>
+          </div>
+          <xf:switch>
+            <xf:case id="cuserinput">
+              <xf:group id="registration-div" appearance="bf:verticalTable"
+                class="InlineRoundBordersAlert">
+                <xf:input bind="bfirstname">
+                  <xf:label>
+                    <xrx:i18n>
+                      <xrx:key>firstname</xrx:key>
+                      <xrx:default>Firstname</xrx:default>
+                    </xrx:i18n>
+                    <span>*:&#160;</span>
+                  </xf:label>
+                  <xf:hint>
+                    <xrx:i18n>
+                      <xrx:key>enter-your-firstname</xrx:key>
+                      <xrx:default>Enter your Firstname</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:hint>
+                  <xf:alert>
+                    <xrx:i18n>
+                      <xrx:key>required-field</xrx:key>
+                      <xrx:default>Required Field</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:alert>
+                </xf:input>
+                <xf:input bind="bname">
+                  <xf:label>
+                    <xrx:i18n>
+                      <xrx:key>lastname</xrx:key>
+                      <xrx:default>Lastname</xrx:default>
+                    </xrx:i18n>
+                    <span>*:&#160;</span>
+                  </xf:label>
+                  <xf:hint>
+                    <xrx:i18n>
+                      <xrx:key>enter-your-lastname</xrx:key>
+                      <xrx:default>Enter your Lastname</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:hint>
+                  <xf:alert>
+                    <xrx:i18n>
+                      <xrx:key>required-field</xrx:key>
+                      <xrx:default>Required Field</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:alert>
+                </xf:input>
+                <xf:input bind="bemail">
+                  <xf:label>
+                    <xrx:i18n>
+                      <xrx:key>email</xrx:key>
+                      <xrx:default>Email</xrx:default>
+                    </xrx:i18n>
+                    <span>*:&#160;</span>
+                  </xf:label>
+                  <xf:hint>
+                    <xrx:i18n>
+                      <xrx:key>enter-your-email</xrx:key>
+                      <xrx:default>Enter your Email Address</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:hint>
+                  <xf:alert>
+                    <xrx:i18n>
+                      <xrx:key>email-isnt-valid</xrx:key>
+                      <xrx:default>Email Address isn't valid</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:alert>
+                </xf:input>
+                <xf:secret bind="bpassword">
+                  <xf:label>
+                    <xrx:i18n>
+                      <xrx:key>password</xrx:key>
+                      <xrx:default>Password</xrx:default>
+                    </xrx:i18n>
+                    <span>*:&#160;</span>
+                  </xf:label>
+                  <xf:hint>
+                    <xrx:i18n>
+                      <xrx:key>must-be-6-characters</xrx:key>
+                      <xrx:default>Must be at least 6 characters</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:hint>
+                  <xf:alert>
+                    <xrx:i18n>
+                      <xrx:key>more-than-6-required</xrx:key>
+                      <xrx:default>More than 6 characters required</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:alert>
+                </xf:secret>
+                <xf:secret bind="brepeat-password">
+                  <xf:label>
+                    <xrx:i18n>
+                      <xrx:key>repeat-password</xrx:key>
+                      <xrx:default>Repeat Password</xrx:default>
+                    </xrx:i18n>
+                    <span>*:&#160;</span>
+                  </xf:label>
+                  <xf:hint>
+                    <xrx:i18n>
+                      <xrx:key>repeat-password</xrx:key>
+                      <xrx:default>Repeat Password</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:hint>
+                  <xf:alert>
+                    <xrx:i18n>
+                      <xrx:key>password-does-not-match</xrx:key>
+                      <xrx:default>Password does not match</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:alert>
+                </xf:secret>
+                <xf:select1 bind="bmoderator" incremental="true">
+                  <xf:label>
+                    <xrx:i18n>
+                      <xrx:key>moderator</xrx:key>
+                      <xrx:default>Moderator</xrx:default>
+                    </xrx:i18n>
+                    <span>*:&#160;</span>
+                  </xf:label>
+                  <xf:hint>
+                    <xrx:i18n>
+                      <xrx:key>choose-a-moderator</xrx:key>
+                      <xrx:default>Choose a Moderator</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:hint>
+                  <xf:alert>
+                    <xrx:i18n>
+                      <xrx:key>no-moderator-selected</xrx:key>
+                      <xrx:default>No Moderator selected</xrx:default>
+                    </xrx:i18n>
+                    <span>.</span>
+                  </xf:alert>
+                   
+                  {
+                  for $email in role:emails('moderator')
+                  let $name-firstname := user:name-firstname($email)
+                  order by $name-firstname
+                  return
+                  <xf:item>
+                    <xf:label>{ $name-firstname }</xf:label>
+                    <xf:value>{ $email }</xf:value>
+                  </xf:item>
+                  }
+                  
+                  <xf:action ev:event="xforms-value-changed">
+                    <xf:load show="embed" targetid="moderator-div">
+                      <xf:resource
+                        value="concat('{ $xrx:localhost-request-base-url }moderator-info?email=', /xrx:user/xrx:moderator)" />
+                      <xf:extension includeCSS="false" includeScript="false"></xf:extension>
+                    </xf:load>
+                  </xf:action>
+                </xf:select1>
                 <xf:trigger id="register-trigger">
                   <xf:label>
                     <xrx:i18n>
@@ -286,10 +334,10 @@ along with VdU/VRET.  If not, see http://www.gnu.org/licenses.
                       if="instance('iresponse')//@status = '1'" />
                   </xf:action>
                 </xf:trigger>
-							  <div id="moderator-div" class="moderator-info" />
-							</xf:group>
-							<div>
-								<br />
+                <div id="moderator-div" class="moderator-info" />
+              </xf:group>
+              <div>
+                <br />
                 <br />
                 <a href="{ conf:param('request-root') }request-password">
                   <xrx:i18n>
@@ -297,33 +345,33 @@ along with VdU/VRET.  If not, see http://www.gnu.org/licenses.
                     <xrx:default>Forgot your password? Get a new one here.</xrx:default>
                   </xrx:i18n>
                 </a>
-								<br />
-								<br />
-								<xrx:i18n>
-									<xrx:key>required-field-message</xrx:key>
-									<xrx:default>Fields marked with * are required fields.</xrx:default>
-								</xrx:i18n>
-							</div>
-						</xf:case>
-						<xf:case id="csuccess">
-							<div>
-								<!-- i18n:label key="please" default="Please" />
-								<xf:trigger appearance="minimal">
-									<xf:label>
-										<i18n:label key="login" default="login" />
-										.
-									</xf:label>
-									<xf:action ev:event="DOMActivate">
-										<xf:load show="embed" targetid="dialog">
-											<xf:resource value="'{ $conf:request-root }ui/login.xml?mode=embed'" />
-										</xf:load>
-									</xf:action>
-								</xf:trigger-->
-							</div>
-						</xf:case>
-					</xf:switch>
-				</div>
-			</xf:group>
-		</div>
-	</xrx:view>
+                <br />
+                <br />
+                <xrx:i18n>
+                  <xrx:key>required-field-message</xrx:key>
+                  <xrx:default>Fields marked with * are required fields.</xrx:default>
+                </xrx:i18n>
+              </div>
+            </xf:case>
+            <xf:case id="csuccess">
+              <div>
+                <!-- i18n:label key="please" default="Please" />
+                <xf:trigger appearance="minimal">
+                  <xf:label>
+                    <i18n:label key="login" default="login" />
+                    .
+                  </xf:label>
+                  <xf:action ev:event="DOMActivate">
+                    <xf:load show="embed" targetid="dialog">
+                      <xf:resource value="'{ $conf:request-root }ui/login.xml?mode=embed'" />
+                    </xf:load>
+                  </xf:action>
+                </xf:trigger-->
+              </div>
+            </xf:case>
+          </xf:switch>
+        </div>
+      </xf:group>
+    </div>
+  </xrx:view>
 </xrx:widget>
