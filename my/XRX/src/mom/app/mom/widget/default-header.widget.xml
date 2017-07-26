@@ -363,6 +363,14 @@ form span.lang {{
                                 </xrx:i18n>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a href="{ conf:param('request-root') }myProfil">
+                                <xrx:i18n>
+                                    <xrx:key>my_Profil</xrx:key>
+                                    <xrx:default>MyProfil</xrx:default>
+                                </xrx:i18n>
+                            </a>
+                        </div>
                         <xrx:div>demonstrator-menu-link</xrx:div>
                     </div>
                 </div>
