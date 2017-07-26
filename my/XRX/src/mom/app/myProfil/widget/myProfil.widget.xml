@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xrx:widget xmlns:xrx="http://www.monasterium.net/NS/xrx" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+  <xrx:id>tag:www.monasterium.net,2011:/mom/widget/myProfil</xrx:id>
+  <xrx:title>
+    <xrx:i18n>
+      <xrx:key>myprofil</xrx:key>
+      <xrx:default>myProfil</xrx:default>
+    </xrx:i18n>
+  </xrx:title>
+  <xrx:subtitle/>
+  <xrx:description/>
+  <xrx:author>JBigalke@smail.uni-koeln.de</xrx:author>
+  <xrx:licence>
+    This is a component file of the VdU Software for a Virtual Research Environment for the handling of Medieval charters.
+    
+    As the source code is available here, it is somewhere between an alpha- and a beta-release, may be changed without any consideration of backward compatibility of other parts of the system, therefore, without any notice.
+    
+    This file is part of the VdU Virtual Research Environment Toolkit (VdU/VRET).
+    
+    The VdU/VRET is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+    VdU/VRET is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with VdU/VRET.  If not, see http://www.gnu.org/licenses.
+    
+    We expect VdU/VRET to be distributed in the future with a license more lenient towards the inclusion of components into other systems, once it leaves the active development stage.
+  </xrx:licence>
+  <xrx:variables>   
+    <!-- Die user.xml des aktiven Users --> 
+    <xrx:variable>
+      <xrx:name>$user-profil</xrx:name>
+      <xrx:expression>user:document($xrx:user-id)</xrx:expression>
+    </xrx:variable>
+    <!-- Der Vorname des Users aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-firstname</xrx:name>
+      <xrx:expression>$user-profil//xrx:firstname</xrx:expression>
+    </xrx:variable>
+    <!-- Der Nachname des Users aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-name</xrx:name>
+      <xrx:expression>$user-profil//xrx:name</xrx:expression>
+    </xrx:variable>
+    <!-- Der Informationstext des Users aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-aboutme</xrx:name>
+      <xrx:expression>$user-profil//xrx:info/text()</xrx:expression>
+    </xrx:variable>
+    <!-- Der Name des Twitteraccounts aus der $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-twitter</xrx:name>
+      <xrx:expression>$user-profil//xrx:twitter/xrx:twitteraccountname</xrx:expression>
+    </xrx:variable>
+    <!-- Die Private Emailadresse aus der $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-privateemail</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:mail</xrx:expression>
+    </xrx:variable>
+    <!-- Die Private Telephonnummer aus $user-profil-->
+    <xrx:variable>
+      <xrx:name>$user-privatephone</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:phone</xrx:expression>
+    </xrx:variable>    
+    <!-- Das Private Herkunftsland des User aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-privatecountry</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:country</xrx:expression>
+    </xrx:variable> 
+    <!-- Die "Private" Heimatsstadt es Users aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-privatecity</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:city</xrx:expression>
+    </xrx:variable> 
+    <!-- Die "Private" Postleitzahl des Users aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-privatepostalcode</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:postalcode</xrx:expression>
+    </xrx:variable> 
+    <!-- Die "Private" Straße des Users aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-privatestreet</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:street</xrx:expression>
+    </xrx:variable> 
+    <!-- Die "Private" Hausnummer des Users aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-privatehousenumber</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:housenumber</xrx:expression>
+    </xrx:variable> 
+    <!-- Der "Private" Facebooklink des User aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-privatefacebooklink</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:facebook</xrx:expression>
+    </xrx:variable>
+    <!-- Der Institutsname aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-institutenname</xrx:name>
+      <xrx:expression>$user-profil//xrx:institute-name</xrx:expression>
+    </xrx:variable>
+    <!-- Die Instituts-Email des User aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-institutionemail</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:mail</xrx:expression>
+    </xrx:variable>
+    <!-- Die Institutstelefonenummer des Users aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-institutionphone</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:phone</xrx:expression>
+    </xrx:variable>    
+    <!-- Das Land des Instituts aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-institutioncountry</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:country</xrx:expression>
+    </xrx:variable> 
+    <!-- Die Institutsstadt aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-institutioncity</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:city</xrx:expression>
+    </xrx:variable> 
+    <!-- Die Postleitzahl aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-institutionpostalcode</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:postalcode</xrx:expression>
+    </xrx:variable> 
+    <!-- Die Straße des Instituts aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-institutionstreet</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:street</xrx:expression>
+    </xrx:variable> 
+    <!-- Die Hausnummer des Insituts aus $user-profil -->
+    <xrx:variable>
+      <xrx:name>$user-institutionhousenumber</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:housenumber</xrx:expression>
+    </xrx:variable>
+    <!-- Der Facebooklink des Instituts--> 
+    <xrx:variable>
+      <xrx:name>$user-institutionfacebooklink</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:facebook</xrx:expression>
+    </xrx:variable>
+    <!-- alle Collections die dem User zuzordnen sind, sortiert nach Public, und Private Collections. -->
+    <xrx:variable>
+      <xrx:name>$user-collections</xrx:name>
+      <xrx:expression>myProfil:sortCollections(metadata:base-collection('mycollection', 'private'))</xrx:expression>
+    </xrx:variable>
+    <!-- alle Private collections aus $user-collections -->
+    <xrx:variable>
+      <xrx:name>$user-privatecollections</xrx:name>
+      <xrx:expression>$user-collections//xrx:privatecollections</xrx:expression>
+    </xrx:variable>
+    <!-- alle Public collections aus $user-collections -->
+    <xrx:variable>
+      <xrx:name>$user-publiccollections</xrx:name>
+      <xrx:expression>$user-collections//xrx:publiccollections</xrx:expression>
+    </xrx:variable>
+    <!-- alle Conversations die der angemeldete User führt. -->
+    <xrx:variable>
+        <xrx:name>$user-conversations</xrx:name>
+        <xrx:expression>$user-profil//xrx:conversations</xrx:expression>
+    </xrx:variable>
+    <!-- Informationen über das Gamification Profil des Users-->
+    <xrx:variable>
+        <xrx:name>$user-gamification</xrx:name>
+        <xrx:expression>$user-profil//xrx:gamification</xrx:expression>
+    </xrx:variable>
+    <!-- Alle Freunde/ Freundschaftsanfragen usw. die dem User zugeordnet werden-->
+    <xrx:variable>
+        <xrx:name>$friends</xrx:name>
+        <xrx:expression>$user-profil//xrx:friends</xrx:expression>
+    </xrx:variable>   
+  </xrx:variables>
+  <xrx:portal>tag:www.monasterium.net,2011:/mom/portal/default</xrx:portal>
+  <xrx:init>
+    <xrx:processor>
+      <xrx:xformsflag>false</xrx:xformsflag>
+            <xrx:jqueryflag>true</xrx:jqueryflag>
+      
+    </xrx:processor>
+  </xrx:init>
+
+    <xrx:csss>
+      <style type="text/css">
+      
+#Twitter-Timeline-Container{{
+  height: 500px;
+  overflow: auto;
+}}
+#contacts-container{{
+  position: relative;
+  float: right;
+  width: 32.5%;
+  margin: 0px;
+  padding: 0px;
+  text-align: left;  
+  top: 0px;
+  }}
+  
+             
+.contact-box{{
+  background: rgb(240,240,240);
+  margin-bottom: 5px;
+  }}
+      
+#my-collections-container{{
+  float: left;
+  }}
+  
+ #Twitter-Timeline-Container{{
+  float: left;
+  width: 32,5%;
+ }}
+      
+.inlinehead-text{{ 
+  color: white !important; 
+  text-decoration: none;
+  margin-left: 5px;
+  }}
+
+
+.rotate{{
+  transform: rotate(0deg);
+  transition: .3s;
+  }}
+
+.ic{{
+  transform: rotate(-90deg);
+  transition: .5s;
+  }}
+
+div.inlinehead{{
+  position: relative;
+  float:left;
+  font-weight:bold;
+  width:640px;
+  background-color:{ conf:param('color5') };
+  color:rgb(255,255,255);
+  line-height:200%;
+  margin-top: 5px;
+  }}
+  
+.collections-container{{
+    position: realtive;
+    width: 640px;
+  }}
+  
+  #conversationTitle{{
+      background: rgb(240,240,240);
+      margin-top: 5px;
+  }}
+ </style>
+ </xrx:csss>
+  <xrx:jss>
+       <!-- jQuery resources -->
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/jquery</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/core</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/widget</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/button</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/mouse</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/draggable</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/droppable</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/position</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/resizable</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/dialog</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/effect</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/effect-pulsate</xrx:resource>
+     <!-- core resources -->
+    <xrx:resource>tag:www.monasterium.net,2011:/core/resource/jquery/xrxI18n</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/core/resource/jquery/ui/xrxMessage</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/core/resource/jquery/xrx</xrx:resource>
+    <!-- Eigene Resources -->
+    <xrx:resource>tag:www.monasterium.net,2011:/mom/resource/js/myProfil</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/mom/resource/twitter</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/mom/resource/js/message</xrx:resource>
+  </xrx:jss>
+  <xrx:view>
+    <xrx:auth>
+      <xrx:rules>
+        <xrx:rule>
+          <xrx:user/>
+          <xrx:dbgroup>atom</xrx:dbgroup>
+        </xrx:rule>
+      </xrx:rules>
+        <xrx:true>
+          <div>
+          <div id="desktop-left-menu"></div>
+          <div class="h2">
+            <!-- Überschrift mit Name des Users-->
+             <xrx:i18n>
+               <xrx:key>MyProfil_Pageheader</xrx:key>
+               <xrx:default>Profile Page</xrx:default>
+             </xrx:i18n>
+             <span>: </span>
+             {concat($user-firstname, " " ,$user-name)}
+            </div> 
+            <!-- link to .../mom/profiles -->
+            <div>
+             <a href="{conf:param('request-root')}profiles">
+              <xrx:i18n>
+                 <xrx:key>MyProfil-OtherProfiles</xrx:key>
+                 <xrx:default>Search Other Profiles</xrx:default>
+               </xrx:i18n>
+              </a>
+            </div>             
+        <!-- Kontaktinformationen -->
+        <div id='contacts-container'>
+        <div id="private-info-box" class='contact-box'>
+        <!-- Private Kontaktinformationen --> 
+         {myProfil:createPrivateContactBox($user-privateemail,$user-privatephone, $user-privatecountry, $user-privatecity, $user-privatepostalcode, $user-privatestreet, $user-privatehousenumber, $user-privatefacebooklink)}
+        </div>    
+        <!-- Kontaktinformationen über das Institut. -->
+        <div id="institute-info-box" class='contact-box'>
+         {myProfil:createInsitutionContactBox($user-institutenname, $user-institutionemail, $user-institutionphone, $user-institutioncountry, $user-institutioncity, $user-privatepostalcode, $user-institutionpostalcode, $user-institutionstreet, $user-privatehousenumber, $user-institutionhousenumber, $user-institutionfacebooklink)}
+         </div>
+         <!-- Twitter-Timeline -->
+          <div id="Twitter-Timeline-Container"><a id="{$user-twitter}" style="display: none"></a></div>
+          </div>
+         <!-- About Me --> 
+          <div class="inlinehead" id='aboutmehead'>
+            <a href="javascript:showHideDiv('aboutme')" class="inlinehead-text">
+               <xrx:i18n>
+                 <xrx:key>about_me</xrx:key>
+                 <xrx:default>About Me</xrx:default>
+               </xrx:i18n>
+           </a>
+          </div> 
+          <div id="aboutme" style="display: none" class="collections-container">{util:parse-html($user-aboutme)}</div>
+          <!-- Unpublished Collections -->
+          <div  class="inlinehead" id='unpublishedcollectionshead'>
+            <a href="javascript:showHideDiv('unpublishedcollections')" class="inlinehead-text">
+               <xrx:i18n>
+                 <xrx:key>My_Unpublished_Collections</xrx:key>
+                 <xrx:default>My Unpublished Collections</xrx:default>
+               </xrx:i18n>
+            </a>
+          </div> 
+          <!-- Published Collections -->
+          <div id="unpublishedcollections" style="display: none" class="collections-container">{myProfil:buildPrivateCollectionList($user-privatecollections)}</div>
+          <div class="inlinehead" id='publishedcollectionshead'>
+            <a href="javascript:showHideDiv('publishedcollections')" class="inlinehead-text" >
+               <xrx:i18n>
+                 <xrx:key>My_Published_Collections</xrx:key>
+                 <xrx:default>My Published Collections</xrx:default>
+               </xrx:i18n>
+            </a>
+          </div> 
+          <div id="publishedcollections" style="display: none" class="collections-container">{myProfil:buildPublicCollectionList($user-publiccollections)}</div>
+           <!-- Friendslist -->
+           <div class="inlinehead" id='friendslistshead'>
+            <a href="javascript:showHideDiv('friendslist')" class="inlinehead-text" >
+               <xrx:i18n>
+                 <xrx:key>My_Friends</xrx:key>
+                 <xrx:default>My Friends</xrx:default>
+               </xrx:i18n>
+            </a>
+          </div> 
+          <div id="friendslist" style="display: none" class="collections-container">{myProfil:createFriendlist($friends)}</div>
+          <!-- Conversations -->
+          <!-- Conversations Deaktiviert 
+           <div class="inlinehead" id='conversationslisthead'>
+            <a href="javascript:showHideDiv('conversationslist')" class="inlinehead-text" >
+             <xrx:i18n>
+                 <xrx:key>My_Conversations</xrx:key>
+                 <xrx:default>My Conversations</xrx:default>
+             </xrx:i18n>
+            </a>
+          </div> 
+          <div id="conversationslist" style="display: none" class="collections-container">{myProfil:createmyConversations($user-conversations)}</div>
+          -->
+          <!-- Gamification Deaktiviert -->
+          <!--  
+          <div class="inlinehead" id='gamificationlisthead'>
+            <a href="javascript:showHideDiv('gamification-points')" class="inlinehead-text" >
+              <xrx:i18n>
+                 <xrx:key>My_Gamification_Points</xrx:key>
+                 <xrx:default>My Gamification Points</xrx:default>
+             </xrx:i18n>
+            </a>
+          </div> 
+          <div id="gamification-points" style="display: none" class="collections-container">{myProfil:gamificationresults($user-gamification)}</div>
+ 			-->
+ <!-- not displayed Pop-up container to create confirmation dialog --> 
+       <div id="confirm-popup-container" style="display:none"></div>
+ <!-- triangle resources for drop-down menubars. see About-me-headline etc. --> 
+             <div  id="Icons" style="display: none">
+       <xrx:resource alt="einklappen" id="ein" type="image/png" class="ic">tag:www.monasterium.net,2011:/mom/resource/image/path_down</xrx:resource>
+                  </div>
+              <!-- link to  .../mom/my-account -->
+             <p><a href="{ conf:param('request-root') }my-account">
+             <xrx:i18n>
+                <xrx:key>Edit_Profil</xrx:key>
+                <xrx:default>Edit Profile</xrx:default>
+             </xrx:i18n>
+             </a></p>  
+              <!-- link to .../mom/TranscribbleStart -->
+              <!-- Gamification Transcribble deaktiviert -->
+              <!--  
+              <p><a href="{conf:param('request-root')}TranscribbleStart">Transcribble</a></p>
+              -->
+         </div>
+        </xrx:true>
+        <xrx:false>
+          <h3>
+            <xrx:i18n>
+              <xrx:key>protected-page-message</xrx:key>
+              <xrx:default>Protected page. Please login first.</xrx:default>
+            </xrx:i18n>
+          </h3>
+        </xrx:false>
+    </xrx:auth>
+  </xrx:view>
+</xrx:widget>

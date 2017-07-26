@@ -1,0 +1,83 @@
+<xrx:service xmlns:xrx="http://www.monasterium.net/NS/xrx">
+  <xrx:id>tag:www.monasterium.net,2011:/mom/service/requestFriendship</xrx:id>
+  <xrx:title>
+    <xrx:i18n>
+      <xrx:key></xrx:key>
+      <xrx:default></xrx:default>
+    </xrx:i18n>
+  </xrx:title>
+  <xrx:subtitle></xrx:subtitle>
+  <xrx:description></xrx:description>
+  <xrx:author>JBigalke</xrx:author>
+  <xrx:licence>
+This is a component file of the VdU Software for a Virtual Research Environment for the handling of Medieval charters.
+
+As the source code is available here, it is somewhere between an alpha- and a beta-release, may be changed without any consideration of backward compatibility of other parts of the system, therefore, without any notice.
+
+This file is part of the VdU Virtual Research Environment Toolkit (VdU/VRET).
+
+The VdU/VRET is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+VdU/VRET is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with VdU/VRET.  If not, see http://www.gnu.org/licenses.
+  </xrx:licence>
+ <xrx:variables>
+<!-- uid des Users an den die Anfrage gestellt wird -->
+   <xrx:variable>
+      <xrx:name>$getuid</xrx:name>
+      <xrx:expression>$data</xrx:expression>    
+    </xrx:variable>   
+<!-- user.xml des Users an den die Anfrgae gestellt wird -->
+    <xrx:variable>
+        <xrx:name>$doc</xrx:name>
+    	<xrx:expression>user:document-by-uuid($getuid)</xrx:expression>
+    </xrx:variable>
+<!-- user.xml des akutell angemeldeten Users -->
+    <xrx:variable>
+    	<xrx:name>$requester-doc</xrx:name>
+    	<xrx:expression>user:document($xrx:user-id)</xrx:expression>
+    </xrx:variable>
+<!-- atom:id des aktuell angemeldeten Users --> 
+    <xrx:variable>
+    	<xrx:name>$requester-atomid</xrx:name>
+    	<xrx:expression>$requester-doc//atom:id/text()</xrx:expression>
+    </xrx:variable>
+<!-- zerhackte atom:id des aktuell angemeldeten users -->    
+    <xrx:variable>
+    	<xrx:name>$tokenized-requester-atomid</xrx:name>
+    	<xrx:expression>tokenize($requester-atomid, '/')</xrx:expression>
+    </xrx:variable> 
+  </xrx:variables>
+  <xrx:init>
+   <xrx:processor>
+     <xrx:translateflag>false</xrx:translateflag>
+   </xrx:processor>
+  </xrx:init> 
+  <xrx:body>
+  { 
+  (: Erstelle einen neuen Node in dem die uuid des Nutzers und als status request steht:)
+ 	let $nodes := <xrx:friend>
+ 					<xrx:account>{$tokenized-requester-atomid[3]}</xrx:account>
+ 					<xrx:status>request</xrx:status>
+ 				  </xrx:friend>
+  (: Speicher dies in die user.xml des users an den die Anfrage gestellt wird :) 
+ 	let $updated := update insert $nodes into $doc//xrx:friends
+  (: Erstelle einen neuen Node in dem die uuid des angefragten friends und der status als request steht :)	
+  	let $requesternodes :=<xrx:friend>
+  							<xrx:account>{$getuid}</xrx:account>
+  						  	<xrx:status>toconfirm</xrx:status>
+  						  </xrx:friend>
+  (: Speicher dies in die User.xml des aktuell angemeldeten users. :)  						  
+  	let $requesterupdate := update insert $requesternodes into $requester-doc//xrx:friends
+  	return ()
+  }
+  </xrx:body>
+</xrx:service>

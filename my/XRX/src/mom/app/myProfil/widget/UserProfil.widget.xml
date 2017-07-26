@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xrx:widget xmlns:xrx="http://www.monasterium.net/NS/xrx" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+  <xrx:id>tag:www.monasterium.net,2011:/mom/widget/UserProfil</xrx:id>
+  <xrx:title>
+    <xrx:i18n>
+      <xrx:key>userprofil</xrx:key>
+      <xrx:default>UserProfil</xrx:default>
+    </xrx:i18n>
+  </xrx:title>
+  <xrx:subtitle/>
+  <xrx:description/>
+  <xrx:author>JBigalke@smail.uni-koeln.de</xrx:author>
+  <xrx:licence>
+    This is a component file of the VdU Software for a Virtual Research Environment for the handling of Medieval charters.
+    
+    As the source code is available here, it is somewhere between an alpha- and a beta-release, may be changed without any consideration of backward compatibility of other parts of the system, therefore, without any notice.
+    
+    This file is part of the VdU Virtual Research Environment Toolkit (VdU/VRET).
+    
+    The VdU/VRET is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    
+    VdU/VRET is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with VdU/VRET.  If not, see http://www.gnu.org/licenses.
+    
+    We expect VdU/VRET to be distributed in the future with a license more lenient towards the inclusion of components into other systems, once it leaves the active development stage.
+  </xrx:licence>
+  <xrx:variables>
+  <xrx:variable>
+    <xrx:name>$uuid</xrx:name>
+    <xrx:expression>$xrx:tokenized-uri[last()-1]</xrx:expression>
+  </xrx:variable>
+    <xrx:variable>
+      <xrx:name>$user-profil</xrx:name>
+      <xrx:expression>user:document-by-uuid($uuid)</xrx:expression>
+    </xrx:variable>
+    <xrx:variable>
+    	<xrx:name>$user-account</xrx:name>
+    	<xrx:expression>$user-profil//xrx:email</xrx:expression>
+    </xrx:variable>
+    <xrx:variable>
+          <xrx:name>$user-firstname</xrx:name>
+      <xrx:expression>$user-profil//xrx:firstname</xrx:expression>
+    </xrx:variable>
+    <xrx:variable>
+      <xrx:name>$user-aboutme</xrx:name>
+      <xrx:expression>$user-profil//xrx:info/text()</xrx:expression>
+    </xrx:variable>
+        <xrx:variable>
+      <xrx:name>$user-name</xrx:name>
+      <xrx:expression>$user-profil//xrx:name</xrx:expression>
+    </xrx:variable>
+    <xrx:variable>
+      <xrx:name>$user-twitter</xrx:name>
+      <xrx:expression>$user-profil//xrx:twitter/xrx:twitteraccountname</xrx:expression>
+    </xrx:variable>
+        <xrx:variable>
+      <xrx:name>$user-privateemail</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:mail</xrx:expression>
+    </xrx:variable>
+        <xrx:variable>
+      <xrx:name>$user-privatephone</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:phone</xrx:expression>
+    </xrx:variable>    
+    <xrx:variable>
+      <xrx:name>$user-privatecountry</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:country</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+      <xrx:name>$user-privatecity</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:city</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+      <xrx:name>$user-privatepostalcode</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:postalcode</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+      <xrx:name>$user-privatestreet</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:street</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+      <xrx:name>$user-privatehousenumber</xrx:name>
+      <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:housenumber</xrx:expression>
+    </xrx:variable> 
+    <xrx:variable>
+    <xrx:name>$user-privatefacebooklink</xrx:name>
+    <xrx:expression>$user-profil//xrx:private/xrx:contact/xrx:address/xrx:facebook</xrx:expression>
+    </xrx:variable>
+    <xrx:variable>
+      <xrx:name>$user-institutenname</xrx:name>
+      <xrx:expression>$user-profil//xrx:institute-name</xrx:expression>
+    </xrx:variable>
+            <xrx:variable>
+      <xrx:name>$user-institutionemail</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:mail</xrx:expression>
+    </xrx:variable>
+        <xrx:variable>
+      <xrx:name>$user-institutionphone</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:phone</xrx:expression>
+    </xrx:variable>    
+    <xrx:variable>
+      <xrx:name>$user-institutioncountry</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:country</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+      <xrx:name>$user-institutioncity</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:city</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+      <xrx:name>$user-institutionpostalcode</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:postalcode</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+      <xrx:name>$user-institutionstreet</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:street</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+      <xrx:name>$user-institutionhousenumber</xrx:name>
+      <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:housenumber</xrx:expression>
+    </xrx:variable> 
+        <xrx:variable>
+    <xrx:name>$user-institutionfacebooklink</xrx:name>
+    <xrx:expression>$user-profil//xrx:institution/xrx:contact/xrx:address/xrx:facebook</xrx:expression>
+    </xrx:variable>
+        <xrx:variable>
+
+      <xrx:name>$user-publiccollection-ids</xrx:name>
+      <xrx:expression>userProfil:getPublicCollections-atomids($user-account)</xrx:expression>
+    </xrx:variable>
+    <xrx:variable>
+      <xrx:name>$general-visibility</xrx:name>
+      <xrx:expression>$user-profil/xrx:user/xrx:visibility</xrx:expression>
+    </xrx:variable>
+        <xrx:variable>
+        <xrx:name>$user-gamification</xrx:name>
+        <xrx:expression>$user-profil//xrx:gamification</xrx:expression>
+    </xrx:variable>
+    <xrx:variable>
+  	<xrx:name>$current-user-atomid</xrx:name>
+  	<xrx:expression>user:atomid($xrx:user-id)</xrx:expression>
+  </xrx:variable>
+  <xrx:variable>
+  	<xrx:name>$tokenized-current-user-atomid</xrx:name>
+  	<xrx:expression>tokenize($current-user-atomid, '/')</xrx:expression>
+  </xrx:variable>
+  <xrx:variable>
+  	<xrx:name>$current-user-uuid</xrx:name>
+  	<xrx:expression>$tokenized-current-user-atomid[3]</xrx:expression>
+  </xrx:variable>
+  <xrx:variable>
+  	<xrx:name>$friendship-status</xrx:name>
+  	<xrx:expression>userProfil:getFriendshipstatus($user-profil, $current-user-uuid)</xrx:expression>
+  </xrx:variable>
+
+  </xrx:variables >
+  <xrx:portal>tag:www.monasterium.net,2011:/mom/portal/default</xrx:portal>
+  <xrx:init>
+    <xrx:processor>
+      <xrx:xformsflag>false</xrx:xformsflag>
+            <xrx:jqueryflag>true</xrx:jqueryflag>
+
+    </xrx:processor>
+  </xrx:init>
+  <xrx:csss>
+    <style type="text/css">
+
+#Twitter-Timeline-Container{{
+  height: 500px;
+  overflow: auto;
+}}
+
+#contacts-container{{
+  position: relative;
+  float: right;
+  width: 32.5%;
+  margin: 0px;
+  padding: 0px;
+  text-align: left;  
+  top: 0px;
+  }}  
+             
+.contact-box{{
+  background: rgb(240,240,240);
+  margin-bottom: 5px;
+  }}
+      
+#my-collections-container{{
+  float: left;
+  }}
+  
+ #Twitter-Timeline-Container{{
+  float: left;
+  width: 32,5%;
+ }}
+      
+.inlinehead-text{{ 
+  color: white !important; 
+  text-decoration: none;
+  margin-left: 5px;
+  }}
+
+.rotate{{
+  transform: rotate(0deg);
+  transition: .3s;
+  }}
+
+.ic{{
+  transform: rotate(-90deg);
+  transition: .5s;
+  }}
+
+div.inlinehead{{
+  position: relative;
+  float:left;
+  font-weight:bold;
+  width:640px;
+  background-color:{ conf:param('color5') };
+  color:rgb(255,255,255);
+  line-height:200%;
+  margin-top: 5px;
+  }}
+  
+.collections-container{{
+    position: realtive;
+    width: 640px;
+  }}
+  
+#publiccollection-list{{
+ margin-left: 20px;
+}}
+
+#publiccollection-list > ul{{
+padding-left: 5px;
+}}
+ </style>
+ </xrx:csss>
+  <xrx:jss>
+       <!-- jQuery resources -->
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/jquery</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/core</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/widget</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/button</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/mouse</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/draggable</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/droppable</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/position</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/resizable</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/dialog</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/effect</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/ui/effect-pulsate</xrx:resource>    
+    <xrx:resource>tag:www.monasterium.net,2011:/mom/resource/twitter</xrx:resource>   
+    <!-- core resources -->
+    <xrx:resource>tag:www.monasterium.net,2011:/core/resource/jquery/xrxI18n</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/core/resource/jquery/ui/xrxMessage</xrx:resource>
+    <xrx:resource>tag:www.monasterium.net,2011:/core/resource/jquery/xrx</xrx:resource>    
+    <xrx:resource>tag:www.monasterium.net,2011:/mom/resource/js/myProfil</xrx:resource>
+  </xrx:jss>
+  <xrx:view> 
+    <div> 
+        <!-- Welcome to div --> 
+           <div class="h2">
+               <xrx:i18n>
+                 <xrx:key>UserProfil-Welcome</xrx:key>
+                 <xrx:default>Welcome to the Profile-Page of</xrx:default>
+               </xrx:i18n>:{concat($user-profil//xrx:firstname , " ", $user-profil//xrx:name)}</div>
+          <!-- Link to ../mom/profiles --> 
+          <div><a href="{conf:param('request-root')}profiles">
+               <xrx:i18n>
+                 <xrx:key>UserProfil-OtherProfiles</xrx:key>
+                 <xrx:default>Search Other Profiles</xrx:default>
+               </xrx:i18n>
+          </a></div>             
+          <!-- contacts container --> 
+          <div id='contacts-container'>
+           <!-- Private Contacts -->
+           {
+           (: get visibility value :) 
+           let $privatevisibility := $user-profil/xrx:user/xrx:profil/xrx:private/xrx:visibility
+           return
+           (: if visibility public show contacts :)
+           if($privatevisibility/text()='public')then(
+           	myProfil:createPrivateContactBox($user-privateemail,$user-privatephone, $user-privatecountry, $user-privatecity, $user-privatepostalcode, $user-privatestreet, $user-privatehousenumber, $user-privatefacebooklink )              
+           )
+           (: if visibility friends :)
+            else if($privatevisibility/text()='friends') then(
+           (: ..test friendship-status, if friendship = friendshipstatus =friendship show contacts :) 
+            	if($friendship-status='friendship') then (myProfil:createPrivateContactBox($user-privateemail,$user-privatephone, $user-privatecountry, $user-privatecity, $user-privatepostalcode, $user-privatestreet, $user-privatehousenumber, $user-privatefacebooklink ))
+			    else()
+		   )
+		   (: if visibility something else do nothing :)
+		   else()
+		   }
+		   <!-- Institution contacts --> 
+		   {
+		   (: get institutionvisibility :)  
+		   let $institutionvisibility := $user-profil/xrx:user/xrx:profil/xrx:institution/xrx:visibility
+		    return 
+		    (: if institutionvisibility = public show contacts :) 
+			 if($institutionvisibility/text()='public')then(myProfil:createInsitutionContactBox($user-institutenname, $user-institutionemail, $user-institutionphone, $user-institutioncountry, $user-institutioncity, $user-privatepostalcode, $user-institutionpostalcode, $user-institutionstreet, $user-privatehousenumber, $user-institutionhousenumber, $user-institutionfacebooklink))
+			(: if institutionvisibility= friends:) 
+			 else if($institutionvisibility/text()='friends') then(
+			(: ... test friendship-status, if status = friendship show contacts :)  
+			      if($friendship-status='friendship')then (myProfil:createInsitutionContactBox($user-institutenname, $user-institutionemail, $user-institutionphone, $user-institutioncountry, $user-institutioncity, $user-privatepostalcode, $user-institutionpostalcode, $user-institutionstreet, $user-privatehousenumber, $user-institutionhousenumber, $user-institutionfacebooklink))
+				else()
+			 )
+		    (: if institutionvisibility something else do nothing :)
+			 else()}
+		<!-- Twitter-Timeline -->	 
+		<div id="Twitter-Timeline-Container"><a id="{$user-twitter}" style="display: none"></a></div>			          
+		</div>
+		<!-- About Me-->
+    	<div class="inlinehead" id='aboutmehead'>
+          <a href="javascript:showHideDiv('aboutme')" class="inlinehead-text">
+            <xrx:i18n>
+             <xrx:key>UserProfil-AboutMe</xrx:key>
+             <xrx:default>About Me</xrx:default>
+           </xrx:i18n>
+          </a>
+        </div> 
+		<div id="aboutme" style="display: none" class="collections-container">{util:parse-html($user-aboutme)}</div>
+		<!-- Published Collections -->
+		<div class="inlinehead" id='publishedcollectionshead'>
+            <a href="javascript:showHideDiv('publishedcollections')" class="inlinehead-text" >
+               <xrx:i18n>
+                 <xrx:key>UserProfil-PublishedCollections</xrx:key>
+                 <xrx:default>Published Collections</xrx:default>
+               </xrx:i18n>
+            </a>
+        </div> 
+        <div id="publishedcollections" style="display: none" class="collections-container">{userProfil:buildPublicCollectionList($user-publiccollection-ids)}</div>
+        <!--Gamification -->
+        <div class="inlinehead" id='gamificationlisthead'>
+            <a href="javascript:showHideDiv('gamification-points')" class="inlinehead-text" >
+               <xrx:i18n>
+                 <xrx:key>UserProfil-GamificationResults</xrx:key>
+                 <xrx:default>Gamification Results</xrx:default>
+               </xrx:i18n>
+           </a>
+        </div> 
+        <div id="gamification-points" style="display: none" class="collections-container">{myProfil:gamificationresults($user-gamification)}</div>
+        <!-- Not shown pop-up container for dialogs -->
+        <div id="popup-container" style="display:none"></div>
+        <!-- Create Friendship request --> 
+          {
+          (: test if user-loggedin :)
+          if($user:is-loggedin)then (
+          (: .. test if friendship-status, if status = false create link to javascriptfunction createRequestFriendshipPopup(name, uid) in myProfil.js :)
+          	if($friendship-status='false') then(<div><a href='javascript:createRequestFriendshipPopup("{$user-name}","{$uuid}")'>Request Friendship</a></div>)
+          (: if user not loggedin or friendshipstatus something else then false do nothing :)   
+            else())
+          else ()
+           }
+       <!-- not shown resources to create triangles in DropDown Menu see About Me etc. -->
+       <div  id="Icons" style="display: none">
+        <xrx:resource alt="einklappen" id="ein" type="image/png" class="ic">tag:www.monasterium.net,2011:/mom/resource/image/path_down</xrx:resource>
+       </div> 
+     </div>
+  </xrx:view>
+</xrx:widget>
