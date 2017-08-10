@@ -363,13 +363,23 @@ form span.lang {{
                                 </xrx:i18n>
                             </a>
                         </div>
-                        <div class="menu-item">
-                            <a href="{ conf:param('request-root') }myProfil">
+                        <div  id="navigation" class="menu-item">
+                            <ul class="navi"><li>
+                            <a href="{ conf:param('request-root') }myProfil">                        
                                 <xrx:i18n>
-                                    <xrx:key>my_Profil</xrx:key>
-                                    <xrx:default>MyProfil</xrx:default>
+                                    <xrx:key>my-profile</xrx:key>
+                                    <xrx:default>MyProfile</xrx:default>
                                 </xrx:i18n>
                             </a>
+                            </li>
+                            <li style="display:none;" class="facet"><a href="{ conf:param('request-root') }profiles">
+                            <xrx:i18n>
+                            <xrx:key>profiles</xrx:key>
+                            <xrx:default>Profiles</xrx:default>
+                            </xrx:i18n>                            
+                            </a>
+                            </li> 
+                            </ul>
                         </div>
                         <xrx:div>demonstrator-menu-link</xrx:div>
                     </div>
@@ -453,12 +463,12 @@ form span.lang {{
  $( document ).ready(function() {{
     console.log( "ready!" );    
  
-    $("#navigation").mouseenter(function(){{      
-        $("li.facet").show();        
+    $(".menu-item").mouseenter(function(){{ 
+        $(this).find("li.facet").show()  
     }});
     
-    $("#navigation").mouseleave(function(){{
-        $("li.facet").hide();       
+    $(".menu-item").mouseleave(function(){{
+        $(this).find("li.facet").hide()  
     }});
  
  
