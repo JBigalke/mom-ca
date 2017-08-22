@@ -171,6 +171,9 @@ form span.lang {{
    }}
       </style>
     </xrx:csss>
+    <xrx:jss>
+    	<xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/jquery</xrx:resource>
+    </xrx:jss>
   <!-- <xrx:jss>
          <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/jquery</xrx:resource>
         <xrx:resource>tag:www.monasterium.net,2011:/xrx/resource/jquery/external/mousewheel</xrx:resource>
@@ -460,6 +463,7 @@ form span.lang {{
   }
                     
   <script type="text/javascript">
+  
  $( document ).ready(function() {{
     console.log( "ready!" );    
  
