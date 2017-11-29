@@ -233,6 +233,7 @@ let $vocabular := replace(data($i/@rdf:about), '#', '')
       <xrx:expression>
         <parameters xmlns="">
           <param name="image-base-uri" value="{ $wcharter:image-base-uri }"/>
+          <param name="sprache" value="{$xrx:lang}"/>
           <param name="controlledvocabularies" value="{$wcharter:controlledvocabularies}"/>
           {
             let $keys := root($wcharter:xsl)//*[local-name(.) = "stylesheet"]/node()
@@ -425,10 +426,7 @@ jQuery(document).ready(function() {{
     <div id="radio">
       <a href="{ $wcharter:charter-context-url }{ $charter:rcharterid }/edit" target="_blank">
       <span>EditMOM</span> 
-      </a>      
-      <a href="{ $wcharter:charter-context-url }{ $charter:rcharterid }/edit?mode=illurk" target="_blank">
-      <span>EditIllurk</span>
-      </a>  
+      </a>       
     </div>
 </form> 
 <!-- javascript:transport();
