@@ -1,23 +1,12 @@
 $(document).ready( function(){
 
-/*
-$.ajax({
-	url: ("/mom/service/geolocations"),
-	method: 'GET',
-	dataType: 'json',
-	success: function (data){
-		console.log(data.geolocations[0].location);
-		$('#jsoncontainer').append(data.geolocations[0].location.name);
-	}
 
-});
 
-*/
 	
 	$("#getArchivesButton").click(function(){
 		
 		$.ajax({
-			url: ("/mom/service/archives"),
+			url: ("/mom/service/geolocations-archives"),
 			method: 'GET',
 			dataType: 'json',
 			success: function (data){
@@ -32,4 +21,18 @@ $.ajax({
 
 
 
+function test(){
 
+	var entry = $("#feedinput").val();
+	var beispielurl = "/mom/service/geolocations-charters$feed="+entry;
+	$("#urlspan").text(beispielurl)
+	$.ajax({
+		url: ("/mom/service/geolocations-charters"),
+		method: 'GET',
+		data: {feed: entry},
+		dataType: 'json',
+		success: function (data){
+			console.log(data);
+		}	
+	});
+}
