@@ -50,14 +50,14 @@ along with VdU/VRET.  If not, see http://www.gnu.org/licenses.
       <xrx:atomid>tag:www.monasterium.net,2011:/mom/widget/geoservices</xrx:atomid>
     </xrx:map>
     <xrx:map>
-    	<xrx:uripattern>service/geolocations$</xrx:uripattern>
+    	<xrx:uripattern>service/geolocations-charters$</xrx:uripattern>
     	<xrx:mode>service</xrx:mode>
-    	<xrx:atomid>tag:www.monasterium.net,2011:/mom/service/geolocations</xrx:atomid>
+    	<xrx:atomid>tag:www.monasterium.net,2011:/mom/service/geolocations-charters</xrx:atomid>
     </xrx:map>
         <xrx:map>
-    	<xrx:uripattern>service/archives$</xrx:uripattern>
+    	<xrx:uripattern>service/geolocations-archives$</xrx:uripattern>
     	<xrx:mode>service</xrx:mode>
-    	<xrx:atomid>tag:www.monasterium.net,2011:/mom/service/archives</xrx:atomid>
+    	<xrx:atomid>tag:www.monasterium.net,2011:/mom/service/geolocations-archives</xrx:atomid>
     </xrx:map>
  </xrx:resolver>
 </xrx:app>
