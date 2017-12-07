@@ -27,6 +27,8 @@ module namespace geoservices="http://www.monasterium.net/NS/geoservices";
 
 import module namespace jsonx="http://www.monasterium.net/NS/jsonx" at "xmldb:exist:///db/XRX.live/mom/app/xrx/jsonx.xqm";
 import module namespace metadata="http://www.monasterium.net/NS/metadata" at "xmldb:exist:///db/XRX.live/mom/app/metadata/metadata.xqm";
+import module namespace cei="http://www.monasterium.net/NS/cei" at "xmldb:exist:///db/XRX.live/mom/app/metadata/cei.xqm";
+import module namespace conf="http://www.monasterium.net/NS/conf" at "xmldb:exist:///db/XRX.src/core/app/xrx/conf.xqm";
 
 
 declare namespace geo = "http://www.monasterium.net/NS/geo";
@@ -34,6 +36,52 @@ declare namespace eag= "http://www.archivgut-online.de/eag";
 import module namespace atom="http://www.w3.org/2005/Atom" at "xmldb:exist:///db/XRX.live/mom/app/data/atom.xqm";
 
 
+declare function geoservices:merge_locations_charters($geoxml, $charters){
+         
+         
+         let $xml := 
+                 <result>
+                    <locations>
+                        {
+                        for $location in $geoxml//geo:location
+                        let $geoid := $location//geo:geoname_id/text()
+                        return <location>
+                                <geoname>{$location/geo:name/text()}</geoname>
+                                <geonames_id>{$geoid}</geonames_id>
+                                <lat>{$location/geo:lat/text()}</lat>
+                                <lng>{$location/geo:lng/text()}</lng>
+                                <who>{$location/geo:who/text()}</who>
+                                <charters>
+                                {
+                                for $entry in $charters//cei:issued/cei:placeName[@key/string()=$geoid]
+                                let $charter := root($entry)
+                                let $tokenizedatomid := tokenize($charter//atom:id/text(),'/')
+                                let $tokenslength := count($tokenizedatomid)
+                                 return 
+                                     <charter>
+                                     <id>{$charter//atom:id/text()}</id>
+                                     <url>{
+                                        switch($tokenslength)
+                                        case 5 return concat("http://monasterium.net/mom/",$tokenizedatomid[3],"/",$tokenizedatomid[4],'/',$tokenizedatomid[5],'/charter')
+                                        case 4 return concat("http://monasterium.net/mom/",$tokenizedatomid[3],"/",$tokenizedatomid[4],'/charter')
+                                        default return "Error"
+                                           }</url>
+                                     <issued>{                                     
+                                     if($charter//cei:issued/cei:date) then $charter//cei:issued/cei:date/text()
+                                     else($charter//cei:issued/cei:dateRange/text())
+                                     
+                                     }</issued>
+                                     </charter>
+                                 }
+                                </charters>
+                            </location>
+                            }
+                    </locations>
+                  </result>
+                  
+                  return $xml
+
+};
 
 
 declare function geoservices:merge_locations_archives($geoxml, $archivegeoxml){
@@ -73,6 +121,59 @@ let $mergedxml := <result>
                   
   return $mergedxml 
 
+};
+
+
+declare function geoservices:create_charter_json($xml){
+
+let $json :=  jsonx:object(
+               jsonx:pair(
+                jsonx:string("geolocations"),
+                jsonx:array(
+                 for $location in $xml//location[charters/charter]
+                  return   jsonx:object(( 
+                            jsonx:pair(
+                             jsonx:string("geoname"),
+                             jsonx:string($location/geoname)
+                            ),
+                            jsonx:pair(
+                            jsonx:string("lat"),
+                            jsonx:string($location/lat)
+                           ),
+                           jsonx:pair(
+                            jsonx:string("lng"),
+                            jsonx:string($location/lng)
+                           ),
+                           jsonx:pair(
+                            jsonx:string("who"),
+                            jsonx:string($location/who)
+                           ),
+                           jsonx:pair(
+                           jsonx:string("charters"),
+                        jsonx:array(
+                          for $charter in $location//charters/charter
+                         return jsonx:object((
+                          jsonx:pair(
+                           jsonx:string("url"),
+                           jsonx:string($charter/url)
+                          ),
+                          jsonx:pair(
+                           jsonx:string("id"),
+                           jsonx:string($charter/id)
+                          ),
+                         jsonx:pair(
+                          jsonx:string("issued"),
+                          jsonx:string($charter/issued)
+                          )
+                        ))
+                      )
+                    )     
+                ))
+               )
+              )
+             )
+             
+             return $json
 };
 
 declare function geoservices:create_archive_json($xml){
