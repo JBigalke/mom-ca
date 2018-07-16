@@ -279,5 +279,16 @@ div.clear {{
 			</div></div>
 		</div>
 	}
+	<div id="fonds-map">                          
+          <xrx:subwidget>
+              <xrx:atomid>tag:www.monasterium.net,2011:/mom/widget/geomap</xrx:atomid>
+              <xrx:pass>
+                 <xrx:parameter>
+                <xrx:name>$mode</xrx:name>
+                <xrx:expression>"fonds"</xrx:expression>
+                </xrx:parameter>             
+              </xrx:pass>              
+            </xrx:subwidget> 
+          </div>
 	</xrx:view>
 </xrx:widget>
