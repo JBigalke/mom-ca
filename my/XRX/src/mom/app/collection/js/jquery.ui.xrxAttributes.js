@@ -9,7 +9,6 @@
 
 (function ($, undefined) {
     
-    
     var uiMainDivId = "xrx-attributes";
     var uiTagnameDivClass = "forms-mixedcontent-attributes-tagname";
     var uiEditAttributesDivClass = "forms-mixedcontent-edit-attributes";
@@ -42,7 +41,8 @@
             suggestedAttributes: null,
             editedAttributes: null,
             cm: null,
-            token: null
+            token: null,
+            personjson: null
         },
         /* option properties get values from codemirror.mode.visualxml.js*/
         
@@ -117,8 +117,9 @@
             //droppableAttributeDiv = $('<div">&#160;</div>').addClass(uiDroppableAttributeDivClass),
             suggestedAttributesDiv = $('<div></div>').addClass(uiSuggestedAttributesDivClass),
             controlledVocButton = $('<div>Use Controlled Vocabulary:</div>').addClass('controlledVocabulary').css("text-align", "right");
-            
-            
+
+            self._getListJson();
+
             /* a method to switch off/on the use of the controlled Vocabulary*/
             self._onoffButton(controlledVocButton, editedAttributes);
             
@@ -205,8 +206,23 @@
             });            
             
         },        
-        /*End of create function */    
-        
+        /*End of create function */
+
+
+
+        _getListJson: function(){
+            var self = this;
+            $.ajax({
+                url: "/mom/service/personlist-as-json",
+                type: "GET",
+                dataType: 'json',
+                success:function(data, textStatus, jqXHR)
+                {
+                    self.options.personjson = data;
+                }
+            });
+        },
+
         _newEditAttribute: function (name, label, value) {
           
         	controlledVocabularies = JSON.parse($("div.available-controlled-vocabularies").text());
@@ -227,6 +243,9 @@
             newEditAttributeTrash = $('<div><span class="ui-icon ui-icon-trash"/></div>').
             addClass(uiFormsTableCellClass);       
             $("select").removeClass("ui-menu");
+
+
+
            /* it has to be proofed if from the last use of the attribute widget,
                  * the user used the cv or not.
                  * so the editedAttributes values are compared with the controlledVocabularies
@@ -234,6 +253,7 @@
                  *               
                  * 
                */
+
             function backbone(attr){            	
                 if(attr.qName == "indexName")
                 {	
@@ -246,7 +266,7 @@
                     }
                 };              
             }
-            var vocabulartest = editedAttributes.find(backbone);                    
+            var vocabulartest = editedAttributes.find(backbone);
             
                if ((elementName == "cei:index") && ((name == "lemma") | (name == "indexName"))){            	  
             		   if(vocabulartest != undefined){
@@ -276,11 +296,14 @@
                     }
                  else {
                     newEditAttribute.append(newEditAttributeLabel).append(newEditAttributeInput).append(newEditAttributeTrash);
+                    addAutocompletelist($(newEditAttributeInput), name,$('.xrx-tagname').text() )
                 }
                 }            
                       
             else {
                 newEditAttribute.append(newEditAttributeLabel).append(newEditAttributeInput).append(newEditAttributeTrash);
+                addAutocompletelist($(newEditAttributeInput), name,$('.xrx-tagname').text() )
+
             }
             
             /* removed since firefox isnt able to display select correctly StMa */
@@ -308,17 +331,137 @@
                 var controlId = nodeset.only.levelId;
                 var relativeId = token.state.context.id.split('.').splice(1);
                 var contextId = controlId.concat(relativeId);                
-                $('.xrx-instance').xrxInstance().replaceAttributeValue(contextId, attributes);                           
+                $('.xrx-instance').xrxInstance().replaceAttributeValue(contextId, attributes);
+
                 
-                
-            });            
-            
+            });
+
+
+            function addAutocompletelist(inputfield, attributename, fieldname){
+                if (attributename == "id") {
+                    if (fieldname == 'person name') {
+                        $(newEditAttributeInput).after('<div class="autocompletelist"></div>');
+                        $(newEditAttributeInput).on('input', function (e) {
+                            autocomplete(this, self);
+                            $(this).on('keydown', function(e){
+                              scrollautocompletelist(e, $(newEditAttributeInput));
+                                });
+                        });
+                    }
+                }
+            }
+
+
+
+
+            function autocomplete(inputfield){
+                var inputvalue = $(inputfield).val();
+                var autocompletearray = self.options.personjson;
+                cleanautocompletelist();
+                for(i = 0; i<autocompletearray.entries.length; i++){
+                    var obj = autocompletearray.entries[i]
+                    if(obj.id.substring(0, inputvalue.length).toUpperCase() == inputvalue.toUpperCase()) {
+                        var listitem = $('<div class="autocompletelistitem"><strong>'+obj.id.substr(0,inputvalue.length) + '</strong>'+obj.id.substr(inputvalue.length)+'</div>');
+                        $('.autocompletelist').show();
+                        $('.autocompletelist').append(listitem);
+                        $(listitem).hover(function(){$(this).css("background-color", "#e9e9e9")},
+                            function(){$(this).css("background-color", "white")});
+                        $(listitem).click(function(){
+                            var clickedtext = $(this).text();
+                            $(inputfield).val(clickedtext);
+                            cleanautocompletelist();
+
+                            if ($(inputfield).val().includes('&')){
+                                var text = $(inputfield).val().replace('&', '&amp;');
+                            }
+                            else{
+                                var text = $(inputfield).val()
+                            }
+                            var attributes = new AttributesImpl();
+                            attributes.addAttribute(null, name, name, undefined, text);
+                            var nodeset = $(document).xrx.nodeset(cm.getInputField());
+                            var controlId = nodeset.only.levelId;
+                            var relativeId = token.state.context.id.split('.').splice(1);
+                            var contextId = controlId.concat(relativeId);
+                            $('.xrx-instance').xrxInstance().replaceAttributeValue(contextId, attributes);
+
+                            return $(inputfield).val();
+                        });
+                    }
+                }
+
+            }
+
+            function scrollautocompletelist(event, inputfield){
+                if (event.keyCode == 40){
+                    if($(".autocompletelistitem.focus").length==0){
+                        $(".autocompletelistitem").first().addClass("focus").css("background-color", "#e9e9e9");
+                    }
+                    else{
+                        if($(".autocompletelistitem.focus").next().is(".autocompletelistitem")){
+                            $(".autocompletelistitem.focus").next().addClass("focus").css("background-color", "#e9e9e9");
+                            $(".autocompletelistitem.focus").first().removeClass("focus").css("background-color", "white");
+                        }
+                        else {
+                            $(".autocompletelistitem.focus").removeClass("focus").css("background-color", "white");
+                            $(".autocompletelistitem").first().addClass("focus");
+                        }
+                    }
+                }
+                else if(event.keyCode == 38) {
+                    if ($(".autocompletelistitem.focus").length == 0) {
+                        $(".autocompletelistitem").last().addClass("focus").css("background-color", "#e9e9e9");
+                    } else {
+                        if ($(".autocompletelistitem.focus").prev().is(".autocompletelistitem")) {
+                            $(".autocompletelistitem.focus").prev().addClass("focus").css("background-color", "#e9e9e9");
+                            $(".autocompletelistitem.focus").last().removeClass("focus").css("background-color", "white");
+                        } else {
+                            $(".autocompletelistitem.focus").removeClass("focus").css("background-color", "white");
+                            $(".autocompletelistitem").last().addClass("focus");
+                        }
+                    }
+                }
+
+                else if(event.keyCode == 13) {
+                    if ($(".autocompletelistitem.focus").length != 0) {
+                        console.log("add text?");
+                        var selectedtext = $(".autocompletelistitem.focus").text();
+                        $(inputfield).val(selectedtext);
+                        cleanautocompletelist();
+
+                        if ($(inputfield).val().includes('&')){
+                            var text = $(inputfield).val().replace('&', '&amp;');
+                        }
+                        else{
+                            var text = $(inputfield).val()
+                        }
+                        var attributes = new AttributesImpl();
+                        attributes.addAttribute(null, name, name, undefined, text);
+                        var nodeset = $(document).xrx.nodeset(cm.getInputField());
+                        var controlId = nodeset.only.levelId;
+                        var relativeId = token.state.context.id.split('.').splice(1);
+                        var contextId = controlId.concat(relativeId);
+                        $('.xrx-instance').xrxInstance().replaceAttributeValue(contextId, attributes);
+
+                    }
+                }
+            }
+
+
+            function cleanautocompletelist(){
+                var listitems = $(".autocompletelistitem");
+                for (var i=0; i<listitems.length; i++){
+                    listitems[i].remove()
+                }
+
+            }
+
             /* Defining the SELECT box:
              * function to set the options in the select box.
              * The function deals with the values from the json-object.             *             
              * In the 'newli' variable the option elements with the possible values
              * are appended to 'menuliste'.*/
-            
+
             function setoptioninSelect(name) {
 
             	var lemmawert;

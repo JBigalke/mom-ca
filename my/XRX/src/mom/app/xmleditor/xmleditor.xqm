@@ -49,6 +49,8 @@ declare function xmleditor:json-element-suggestions($xsd as element(xs:schema)) 
     )
 };
 
+
+
 declare function xmleditor:json-attribute-suggestions($xsd as element(xs:schema)) as xs:string {
 
     let $namespace := $xsd/@targetNamespace/string()
@@ -193,3 +195,38 @@ declare function xmleditor:vocabularasjson($rdf as xs:string, $vocabular){
             
           
  };
+
+
+
+declare function xmleditor:personlistautocompletejson(){
+
+    let $personlist := doc("/db/mom-data/metadata.person.public/CDC-AbatiSanMassimo.tei.xml")//tei:person
+
+    let $json := jsonx:object(
+            jsonx:pair(
+                    jsonx:string("entries"),
+                    jsonx:array(
+                            for $entry in $personlist
+                            return(
+                                jsonx:pair(
+                                        jsonx:string("entry"),
+                                        jsonx:object((
+                                            jsonx:pair(
+                                                    jsonx:string("id"),
+                                                    jsonx:string($entry/@xml:id)
+                                            ),
+                                            jsonx:pair(
+                                                    jsonx:string("name"),
+                                                    jsonx:string($entry//tei:persName)
+                                            )
+                                        )
+                                        )
+                                )
+                            )
+                    )
+            )
+    )
+
+    return $json
+
+};

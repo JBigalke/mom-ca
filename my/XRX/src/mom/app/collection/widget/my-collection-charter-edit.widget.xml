@@ -278,6 +278,12 @@
             <xrx:name>$service-prefix</xrx:name>
             <xrx:expression>xs:string('')</xrx:expression>
         </xrx:variable>
+
+        <!-- Autocomplete Variables -->
+        <xrx:variable>
+            <xrx:name>$personlistjson</xrx:name>
+            <xrx:expression>xmleditor:personlistautocompletejson()</xrx:expression>
+        </xrx:variable>
     </xrx:variables>
     <xrx:portal>tag:www.monasterium.net,2011:/mom/portal/empty</xrx:portal>
     <xrx:init>
@@ -330,6 +336,27 @@
 select .group {{
 font-weight: bold !important;
 }}
+
+
+        .autocompletelist{{
+        position: relative;
+        border-width: 1px;
+        border-bottom-style: solid;
+        border-left-style: solid;
+        border-right-style: solid;
+        overflow-auto;
+        top: 98%;
+        width: 92.5%;
+        z-index: 1;
+        }}
+
+        .autocompletelistitem{{
+        background-color: white;
+        }}
+
+        .autocompletelistitem.focus{{
+        background-color: #e9e9e9;
+        }}
 
  </style>
     </xrx:csss>
